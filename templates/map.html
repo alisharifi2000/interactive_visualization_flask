@@ -1,0 +1,85 @@
+<style>
+#container {
+    height: 500px;
+    min-width: 310px;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.loading {
+    margin-top: 10em;
+    text-align: center;
+    color: gray;
+}
+.highcharts-background {
+    fill: #3e3e40;
+}
+.highcharts-plot-border, .highcharts-plot-background {
+    fill: none;
+}
+.highcharts-label-box {
+    fill: #E0E0E3;
+}
+</style>
+
+
+<script src="https://code.highcharts.com/maps/highmaps.js"></script>
+<script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/offline-exporting.js"></script>
+<script src="https://code.highcharts.com/maps/modules/accessibility.js"></script>
+
+<div id="container"></div>
+<script>
+// Prepare random data
+
+var data = {{data}};
+
+Highcharts.getJSON('https://raw.githubusercontent.com/ssepehrnoush/Iran-geojson-map-boundaries/master/ir_states_boundaries_coordinates.geojson', function (geojson) {
+
+    // Initialize the chart
+    Highcharts.mapChart('container', {
+        chart: {
+            map: geojson
+        },
+
+        title: {
+            text: 'GeoJSON in Highmaps'
+        },
+
+        accessibility: {
+            typeDescription: 'Map of Iran.'
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        colorAxis: {
+            minColor: '#EEEEFF',
+            maxColor: '#000022',
+            tickPixelInterval: 100
+        },
+
+        series: [{
+            data: data,
+            keys: ['name:en', 'value'],
+            joinBy: 'name:en',
+            name: 'GDP',
+            states: {
+                hover: {
+                    color: '#FFFFFF'
+                }
+            },
+            dataLabels: {
+                enabled: true,
+                color: 'white',
+                format: '{point.properties.name:en}'
+            }
+        }]
+    });
+});
+
+</script>
