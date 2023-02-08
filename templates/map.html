@@ -32,9 +32,17 @@
 <script>
 // Prepare random data
 
-var data = {{data}};
-
-Highcharts.getJSON('https://raw.githubusercontent.com/ssepehrnoush/Iran-geojson-map-boundaries/master/ir_states_boundaries_coordinates.geojson', function (geojson) {
+// var data = [
+//     ['Qam', 710],
+//     ['Tehran', 728],
+//     ['Alborz', 2100],
+// ];
+var data = [
+    ['{{p1}}', {{v1}}],
+    ['{{p2}}', {{v2}}],
+    ['{{p3}}', {{v3}}],
+];
+Highcharts.getJSON('https://raw.githubusercontent.com/alisharifi2000/interactive_visualization_flask/main/templates/iran.geojson', function (geojson) {
 
     // Initialize the chart
     Highcharts.mapChart('container', {
@@ -65,8 +73,8 @@ Highcharts.getJSON('https://raw.githubusercontent.com/ssepehrnoush/Iran-geojson-
 
         series: [{
             data: data,
-            keys: ['name:en', 'value'],
-            joinBy: 'name:en',
+            keys: ['NAME_1', 'value'],
+            joinBy: 'NAME_1',
             name: 'GDP',
             states: {
                 hover: {
@@ -76,7 +84,7 @@ Highcharts.getJSON('https://raw.githubusercontent.com/ssepehrnoush/Iran-geojson-
             dataLabels: {
                 enabled: true,
                 color: 'white',
-                format: '{point.properties.name:en}'
+                format: '{point.properties.NAME_1}'
             }
         }]
     });
