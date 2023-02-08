@@ -1,21 +1,17 @@
-from flask import Flask
-from jinja2 import Environment, FileSystemLoader
+from flask import Flask, render_template
 
 app = Flask(__name__)
 
 
 @app.route('/')
 def hello_world():  # put application's code here
-    data = [['Tehran', 728], ['Qom', 121], ['North Khorasan', 10], ['East Azerbaijan', 1000], ['West Azerbaijan', 660]]
+    provinces = {'p1': 'Tehran', 'p2': 'Yazd', 'p3': 'Semnan'}
+    values = {'v1': 100, 'v2': 200, 'v3': 400}
 
-    env = Environment(loader=FileSystemLoader('templates'))
-    template = env.get_template('map.html')
-    output_from_parsed_template = template.render(data=data)
-    # to save the results
-    with open("my_new_file.html", "w") as fh:
-        fh.write(output_from_parsed_template)
-    return output_from_parsed_template
+    data = provinces | values
+    print(data)
+    return render_template('map.html', **data)
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
